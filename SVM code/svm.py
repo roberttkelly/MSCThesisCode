@@ -31,7 +31,13 @@ def load_subset(subset):
 		if image.shape == (256, 256, 3):
 			images[fid] = image.flatten()
 			labels[fid] = int(dict_labels[file])
-	return images, labels, files
+	return images, labels, 
+
+pca = RandomizedPCA(n_components=n_components, whiten=True)
+
+param_grid = {'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+              'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+clf = GridSearchCV(SVC(kernel='rbf', class_weight='auto'),param_grid)
 
 def kappa(labels, predictions):
 	labels = np.asarray(labels)
