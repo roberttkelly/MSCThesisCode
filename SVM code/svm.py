@@ -1,5 +1,6 @@
 # Run SVM on retina images
 from sklearn import svm
+from matplotlib.mlab import PCA as mlabPCA
 import numpy as np
 import os
 from scipy.misc import imsave,imread
