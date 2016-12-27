@@ -1,4 +1,5 @@
-"""Resize and crop images to square, save as tiff."""
+"""This program resizes and crops images, removing black border and saving to tiff forman."""
+
 from __future__ import division, print_function
 import os
 from multiprocessing.pool import Pool
@@ -9,7 +10,7 @@ from PIL import Image, ImageFilter
 
 import data
 
-N_PROC = 2
+Num_Proc = 2
 
 def convert(fname, crop_size):
     img = Image.open(fname)
@@ -30,8 +31,6 @@ def convert(fname, crop_size):
             print('bbox none for {} (???)'.format(fname))
         else:
             left, upper, right, lower = bbox
-            # if we selected less than 80% of the original 
-            # height, just crop the square
             if right - left < 0.8 * h or lower - upper < 0.8 * h:
                 print('bbox too small for {}'.format(fname))
                 bbox = None
@@ -67,7 +66,6 @@ def get_convert_fname(fname, extension, directory, convert_directory):
     return fname.replace('jpeg', extension).replace(directory, 
                                                     convert_directory)
 
-
 def process(args):
     fun, arg = args
     directory, convert_directory, fname, crop_size, extension = arg
@@ -99,14 +97,14 @@ def main(directory, convert_directory, test, crop_size, extension):
     except OSError:
         pass
 
-    filenames = [os.path.join(dp, f) for dp, dn, fn in os.walk(directory)
+    file_names = [os.path.join(dp, f) for dp, dn, fn in os.walk(directory)
                  for f in fn if f.endswith('jpeg') or f.endswith('tiff')] 
-    filenames = sorted(filenames)
+    file_names = sorted(file_names)
 
     if test:
-        names = data.get_names(filenames)
-        y = data.get_labels(names)
-        for f, level in zip(filenames, y):
+        name = data.get_names(file_names)
+        y = data.get_labels(name)
+        for f, level in zip(file_names, y):
             if level == 1:
                 try:
                     img = convert(f, crop_size)
@@ -117,24 +115,24 @@ def main(directory, convert_directory, test, crop_size, extension):
                 except KeyboardInterrupt:
                     exit(0)
 
-    print("Resizing images in {} to {}, this takes a while."
+    print("Resizing images in {} to {}, this can be a long process."
           "".format(directory, convert_directory))
 
     n = len(filenames)
-    # process in batches, sometimes weird things happen with Pool on my machine
-    batchsize = 500
-    batches = n // batchsize + 1
-    pool = Pool(N_PROC)
+    # the process is carried out in batches
+    b_size = 500
+    num_batch = n // b_size + 1
+    pool = Pool(Num_Proc)
 
     args = []
 
-    for f in filenames:
+    for files in filenames:
         args.append((convert, (directory, convert_directory, f, crop_size, 
                            extension)))
 
-    for i in range(batches):
-        print("batch {:>2} / {}".format(i + 1, batches))
-        pool.map(process, args[i * batchsize: (i + 1) * batchsize])
+    for i in range(num_batch):
+        print("batch number {:>2} / {}".format(i + 1, num_batch))
+        pool.map(process, args[i * batchsize: (i + 1) * b_size])
 
     pool.close()
 
