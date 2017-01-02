@@ -1,0 +1,27 @@
+cut -f1 big_gap1.2.list bad_small.list  | sort -u > bg_small.list
+
+notIn.pl bg_small.list 0 meta.tsv 0 > meta_bg_small.tsv
+
+notIn.pl bg_small.list 0 val01.list 0 > val01_bg_small.list
+
+tail -n +2 ../jd/partitions/val02.tsv | cut -f1 | cut -f2 -d / | perl -pe 's/$/.jpeg/' > val02.list
+
+tail -n +2 ../jd/partitions/val03.tsv | cut -f1 | cut -f2 -d / | perl -pe 's/$/.jpeg/' > val03.list
+
+tail -n +2 ../jd/partitions/val04.tsv | cut -f1 | cut -f2 -d / | perl -pe 's/$/.jpeg/' > val04.list
+
+tail -n +2 ../jd/partitions/val05.tsv | cut -f1 | cut -f2 -d / | perl -pe 's/$/.jpeg/' > val05.list
+
+cat val02.list val03.list val04.list val05.list >val_big.list
+
+shuffle.pl val_big.list | head -n 2500 > val_mix.list
+
+notIn.pl val_big.list 0 meta.tsv 0  | notIn.pl bg_small.list 0  - 0 >m_t1.tsv
+
+same.pl val_mix.list 0 meta.tsv 0 | cat m_t1.tsv - > meta_small.tsv
+
+#for big std differences
+ sort -k3,3n -t, train_pred_std.out  | tail -n 2000 | screen.pl "," 2 0.3 | cut -f1 -d, > ../../big_std.list
+
+notIn.pl big_std.list 0 meta.tsv 0 > meta_no_big_std.tsv
+notIn.pl meta_no_big_std.tsv 0 val01.list 0 | same.pl - 0 meta.tsv 0 >> meta_no_big_std.tsv

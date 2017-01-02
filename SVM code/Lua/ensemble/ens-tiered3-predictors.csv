@@ -1,0 +1,13 @@
+id,val,test
+m42,val/model_42_val01_pred.txt,test/model_42_test_pred.txt
+m41,val/model_41_val01_pred.txt,test/model_41_test_pred.txt
+cyc28,val/model_28_cyc_val01_pred.txt,test/model_28_cyc_test_pred.txt
+m46,val/m46_val01_pred.txt,test/m46_test_pred.txt
+m47,val/m47_val01_pred.txt,test/m47_test_pred.txt
+m52_no_bg,val/m52_no_bg_val01_pred.txt,test/m52_no_bg_test_pred.txt
+m51_no_bg,val/m51_no_bg_val01.txt,test/m51_no_bg_test_pred.txt
+m53,val/m53_val01_pred.txt,test/m53_test_pred.txt
+m51_1,val/m51_1_val01_pred.txt,test/m51_1_test_pred.txt
+m53_2_psl,val/m53_2_psl_val01_pred.out,test/m53_2_psl_test_pred.txt
+m58_1,val/m58_1_val01_pred.out,test/m58_1_test_pred.txt
+m55_bg_small,val/m55_bg_small_val01_pred.out,test/m55_bg_small_test_pred.txt

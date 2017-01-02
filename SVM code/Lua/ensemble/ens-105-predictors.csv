@@ -1,0 +1,10 @@
+id,val,test
+m42,../../models/output3/val/model_42_val01_pred.txt,../../models/output3/test/model_42_test_pred.txt
+m41,../../models/output3/val/model_41_val01_pred.txt,../../models/output3/test/model_41_test_pred.txt
+m28,../../models/output3/val/model_28_cyc_val01_pred.txt,../../models/output3/test/model_28_cyc_test_pred.txt
+m46,../../models/output3/val/m46_val01_pred.txt,../../models/output3/test/m46_test_pred.txt
+m46_2,../../models/output3/val/m46_val01_pred2.txt,../../models/output3/test/m46_test_pred2.txt
+m47,../../models/output3/val/m47_val01_pred.txt,../../models/output3/test/m47_test_pred.txt
+m52_no_bg,../../models/output3/val/m52_no_bg_val01_pred.txt,../../models/output3/test/m52_no_bg_test_pred.txt
+m51_no_bg,../../models/output3/val/m51_no_bg_val01.txt,../../models/output3/test/m51_no_bg_test_pred.txt
+m53,../../models/output3/val/m53_val01_pred.txt,../../models/output3/test/m53_test_pred.txt
